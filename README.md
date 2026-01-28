@@ -54,36 +54,29 @@ To: {{.To}}
 - `{{.Subject}}` - Email subject
 - `{{.Body}}` - Email body (plain text preferred, falls back to HTML)
 
-## Docker Compose Example
+## Quick Start
 
+1. Download the compose file:
+```bash
+curl -O https://raw.githubusercontent.com/alex-rs/smtp-gotify/main/docker-compose.yml
+```
+
+2. Edit `docker-compose.yml` and set your Gotify URL and token:
 ```yaml
-services:
-  smtp-gotify:
-    image: smtp-gotify
-    build: .
-    ports:
-      - "2525:2525"
-      - "8080:8080"
-    environment:
-      GOTIFY_URL: "https://gotify.example.com"
-      GOTIFY_TOKEN: "your-app-token"
-      GOTIFY_PRIORITY: "5"
-      GOTIFY_MARKDOWN: "false"
-      LOG_LEVEL: "info"
-      LOG_FORMAT: "json"
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/health"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
+environment:
+  GOTIFY_URL: "https://gotify.example.com"
+  GOTIFY_TOKEN: "your-app-token"
+```
+
+3. Start the service:
+```bash
+docker compose up -d
 ```
 
 For multiple Gotify tokens (sends to all):
-
 ```yaml
-    environment:
-      GOTIFY_TOKEN: "token1,token2,token3"
+environment:
+  GOTIFY_TOKEN: "token1,token2,token3"
 ```
 
 ## Testing

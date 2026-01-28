@@ -1,0 +1,26 @@
+services:
+  smtp-gotify:
+    image: ghcr.io/alex-rs/smtp-gotify:0.1.0
+    ports:
+      - "2525:2525"
+      - "8080:8080"
+    environment:
+      # Required - set these values
+      GOTIFY_URL: "https://gotify.example.com"
+      GOTIFY_TOKEN: "your-app-token"
+
+      # Optional - uncomment to customize
+      # GOTIFY_PRIORITY: "5"
+      # GOTIFY_MARKDOWN: "false"
+      # GOTIFY_TITLE_TEMPLATE: "{{.Subject}}"
+      # GOTIFY_MESSAGE_TEMPLATE: "From: {{.From}}\nTo: {{.To}}\n---\n{{.Body}}"
+      # SMTP_LISTEN: ":2525"
+      # SMTP_DOMAIN: "localhost"
+      # LOG_LEVEL: "info"
+      # LOG_FORMAT: "json"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
