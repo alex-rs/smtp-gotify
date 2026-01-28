@@ -34,7 +34,9 @@ func NewServer(addr string, logger *slog.Logger) *Server {
 func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(Response{Status: "ok"})
+	if err := json.NewEncoder(w).Encode(Response{Status: "ok"}); err != nil {
+		s.logger.Error("failed to encode health response", "error", err)
+	}
 }
 
 func (s *Server) ListenAndServe() error {

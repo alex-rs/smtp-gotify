@@ -25,7 +25,7 @@ func TestClient_Forward(t *testing.T) {
 		}
 
 		body, _ := io.ReadAll(r.Body)
-		json.Unmarshal(body, &received)
+		_ = json.Unmarshal(body, &received)
 
 		w.WriteHeader(http.StatusOK)
 	}))
@@ -63,7 +63,7 @@ func TestClient_ForwardWithMarkdown(t *testing.T) {
 	var received Message
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		body, _ := io.ReadAll(r.Body)
-		json.Unmarshal(body, &received)
+		_ = json.Unmarshal(body, &received)
 		w.WriteHeader(http.StatusOK)
 	}))
 	defer server.Close()

@@ -24,8 +24,8 @@ func TestSession_Data(t *testing.T) {
 	parser := mail.NewParser()
 	session := NewSession(slog.Default(), parser, forwarder)
 
-	session.Mail("sender@example.com", nil)
-	session.Rcpt("recipient@example.com", nil)
+	_ = session.Mail("sender@example.com", nil)
+	_ = session.Rcpt("recipient@example.com", nil)
 
 	email := `From: sender@example.com
 To: recipient@example.com
@@ -54,8 +54,8 @@ func TestSession_Reset(t *testing.T) {
 	parser := mail.NewParser()
 	session := NewSession(slog.Default(), parser, forwarder)
 
-	session.Mail("sender@example.com", nil)
-	session.Rcpt("recipient@example.com", nil)
+	_ = session.Mail("sender@example.com", nil)
+	_ = session.Rcpt("recipient@example.com", nil)
 	session.Reset()
 
 	if session.from != "" {
@@ -72,8 +72,8 @@ func TestSession_EnvelopeAddresses(t *testing.T) {
 	parser := mail.NewParser()
 	session := NewSession(slog.Default(), parser, forwarder)
 
-	session.Mail("envelope-sender@example.com", nil)
-	session.Rcpt("envelope-recipient@example.com", nil)
+	_ = session.Mail("envelope-sender@example.com", nil)
+	_ = session.Rcpt("envelope-recipient@example.com", nil)
 
 	// Email without From/To headers
 	email := `Subject: No Headers

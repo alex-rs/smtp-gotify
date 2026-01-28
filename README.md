@@ -1,5 +1,7 @@
 # smtp-gotify
 
+[![CI](https://github.com/alex-rs/smtp-gotify/actions/workflows/ci.yml/badge.svg)](https://github.com/alex-rs/smtp-gotify/actions/workflows/ci.yml)
+
 A lightweight SMTP server that forwards incoming emails as Gotify push notifications.
 
 ## Use Case

@@ -68,9 +68,13 @@ func main() {
 	logger.Info("shutting down")
 
 	if healthServer != nil {
-		healthServer.Shutdown(context.Background())
+		if err := healthServer.Shutdown(context.Background()); err != nil {
+			logger.Error("health server shutdown error", "error", err)
+		}
 	}
-	smtpServer.Close()
+	if err := smtpServer.Close(); err != nil {
+		logger.Error("SMTP server close error", "error", err)
+	}
 }
 
 func setupLogger(cfg config.LogConfig) *slog.Logger {
