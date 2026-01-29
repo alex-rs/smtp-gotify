@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -16,6 +18,21 @@ import (
 )
 
 func main() {
+	// Built-in health check client for Docker HEALTHCHECK in scratch images
+	if len(os.Args) > 1 && os.Args[1] == "healthcheck" {
+		addr := "http://localhost:8080"
+		if len(os.Args) > 2 {
+			addr = os.Args[2]
+		}
+		resp, err := http.Get(addr + "/health")
+		if err != nil || resp.StatusCode != http.StatusOK {
+			fmt.Fprintln(os.Stderr, "unhealthy")
+			os.Exit(1)
+		}
+		fmt.Println("healthy")
+		os.Exit(0)
+	}
+
 	cfg, err := config.Load()
 	if err != nil {
 		slog.Error("failed to load config", "error", err)

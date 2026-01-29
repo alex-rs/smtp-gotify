@@ -1,6 +1,6 @@
 services:
   smtp-gotify:
-    image: ghcr.io/alex-rs/smtp-gotify:0.1.0
+    image: ghcr.io/alex-rs/smtp-gotify:latest
     ports:
       - "2525:2525"
       - "8080:8080"
@@ -20,7 +20,7 @@ services:
       # LOG_FORMAT: "json"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/health"]
+      test: ["CMD", "/smtp-gotify", "healthcheck"]
       interval: 30s
       timeout: 5s
       retries: 3

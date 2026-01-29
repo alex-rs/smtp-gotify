@@ -16,4 +16,7 @@ COPY --from=builder /build/smtp-gotify /smtp-gotify
 
 EXPOSE 2525 8080
 
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+  CMD ["/smtp-gotify", "healthcheck"]
+
 ENTRYPOINT ["/smtp-gotify"]
